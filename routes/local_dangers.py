@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from models.location import LocationRequest
 from config.database import db
-
+from schemas.dangers import danger_entity
 
 router = APIRouter(prefix='/local/dangers')
 
@@ -20,4 +20,7 @@ async def create_alert(location: LocationRequest):
 async def get_all_dangers():
     dangers = db.dangers.find()
     response = list(dangers)
+    for index in range(len(response)):
+        response[index] = danger_entity(response[index])
+    print(response)
     return JSONResponse(response, 200)
