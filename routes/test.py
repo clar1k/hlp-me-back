@@ -4,7 +4,8 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-@router.get('/')
+
+@router.get("/")
 def test():
-  print(db['test'])
-  return JSONResponse({'msg': 'test'}, 200)
+    db.user.insert_one({"name": "test"})
+    return JSONResponse({"msg": "test"}, 200)
