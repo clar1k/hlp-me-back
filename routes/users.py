@@ -6,7 +6,7 @@ from jose import jwt
 
 from config.config import Config
 from config.database import db
-from models.users import User, UserIn
+from models.users import User, UserIn, UserUpdate
 from schemas.users import user_entity
 
 users = APIRouter(tags=['Users'])
@@ -28,16 +28,6 @@ def create_user(user: UserIn):
     new_user.password = bcrypt.hashpw(password)
     db.user.insert_one(new_user, dict())
     return JSONResponse({'message': 'User has been created'}, 201)
-
-
-# @users.put('/user/')
-# def update_user(user: UserIn):
-#     _filter = {'email': user.email}
-#     update_values = {'$set': user.dict()}
-#     is_updated_document = db.user.find_one_and_update(_filter, update_values)
-#     if is_updated_document:
-#         return JSONResponse({'message': 'Update successful'}, 201)
-#     return JSONResponse({'message': 'Could not find a user with this email'}, 400)
 
 
 @users.put('/user/update')
