@@ -12,7 +12,7 @@ async def create_alert(location: LocationRequest):
     try:
         db.dangers.insert_one(location.model_dump())
     except Exception as e:
-        return JSONResponse({'msg': e}, 500)
+        return JSONResponse({'msg': str(e)}, 500)
     return JSONResponse({'msg': 'Added new danger to the local dangers'}, 200)
 
 
