@@ -6,7 +6,7 @@ from jose import jwt
 
 from config.config import Config
 from config.database import db
-from models.users import UserIn
+from models.users import TelegramUserInput, UserIn
 from schemas.users import user_entity
 
 auth = APIRouter(tags=['Auth'])
@@ -57,3 +57,11 @@ async def logout(token: str) -> JSONResponse:
 
     db.token_blacklist.insert_one({'token': token})
     return JSONResponse({'message': 'Logout successful'}, 200)
+
+
+@auth.post('/tg/register')
+def register_telegram_user(user: TelegramUserInput):
+    if db.user.find_one({'telegram_id': user.tg_id}):
+        return JSONResponse({'msg': 'User already registered'}, 400)
+    db.user.insert_one(user.model_dump())
+    return JSONResponse({'msg': 'User registered'}, 200)

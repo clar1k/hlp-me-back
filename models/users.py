@@ -11,7 +11,6 @@ class User(BaseModel):
 
 
 class UserIn(BaseModel):
-    tg_id: int
     username: str
     email: EmailStr
     password: str
@@ -27,6 +26,13 @@ class UserUpdate(BaseModel):
     email: EmailStr
     phone_number: str
     accessToken: str
+
+
+class TelegramUserInput(BaseModel):
+    tg_id: int
+    username: str = ''
+    first_name: str
+    hash_str: str
 
 
 def check_password(password: str, hashed_password: str) -> bool:
