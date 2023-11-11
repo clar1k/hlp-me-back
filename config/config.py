@@ -5,4 +5,4 @@ load_dotenv('.env.dev')
 
 
 class Config:
-  MONGO_CONNECTION = env.get('MONGO_CONNECTION')
+    MONGO_CONNECTION = env.get('MONGO_CONNECTION')
