@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from icecream import ic
 from jose import jwt
 
 from config.config import Config
