@@ -11,13 +11,13 @@ class User(BaseModel):
 
 
 class UserIn(BaseModel):
-    nickname: str
+    username: str
     email: EmailStr
     password: str
 
 
 class UserOut(BaseModel):
-    nickname: str
+    username: str
     email: EmailStr
 
 

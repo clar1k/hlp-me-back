@@ -6,16 +6,16 @@ from jose import jwt
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from models.users import UserIn, User, check_password
-from config.database import database
+from config.database import db
 from config.config import Config
 
 auth = APIRouter(tags=['Auth'])
 
 @auth.post('/auth/register')
 async def register(user: UserIn):
-    user_is_existed = database.user.find_one({'email': user.email})
+    user_is_existed = db.user.find_one({'email': user.email})
     if user_is_existed:
-        return JSONResponse({'message': 'User is already in database'}, 400)
+        return JSONResponse({'message': 'User is already in db'}, 400)
     
 
 async def handle_register(user: UserIn):
@@ -27,7 +27,7 @@ async def login(user_input: UserIn) -> JSONResponse:
     login_user(user_input)
 
 def login_user(user_input: UserIn) -> JSONResponse:
-    user: Dict = database.user.find_one({'email': user_input.email})
+    user: Dict = db.user.find_one({'email': user_input.email})
     if user:
         if check_password(user_input.password, user['password']):
             unique_id = str(user['_id'])
@@ -44,8 +44,8 @@ async def create_token(unique_id: str) -> str:
 
 @auth.post('/auth/logout/{token}')
 async def logout(token: str) -> JSONResponse:
-    if database.token_blacklist.find_one({'token': token}):
-        return JSONResponse({'message': 'Token is already in database'}, 400)
+    if db.token_blacklist.find_one({'token': token}):
+        return JSONResponse({'message': 'Token is already in db'}, 400)
 
-    database.token_blacklist.insert_one({'token': token})
+    db.token_blacklist.insert_one({'token': token})
     return JSONResponse({'message': 'Logout successful'}, 200)
