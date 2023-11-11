@@ -56,7 +56,7 @@ async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
 
     db.user.update_one({'_id': user_id}, {'$set': user})
 
-    return JSONResponse({'username': user_data['username'], 'email': user_data['email'], 'phone_number': user_data['phone_number'], 'accessToken': user_data['decoded_token']}, 200) 
+    return JSONResponse({'full_name': user_data['full_name'], 'email': user_data['email'], 'phone_number': user_data['phone_number'], 'accessToken': user_data['accessToken']}, 200) 
 
 @users.delete('/user/')
 async def delete_user(token: dict = Body(..., example={'token': 'access token value'})):
