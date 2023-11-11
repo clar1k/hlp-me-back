@@ -4,7 +4,7 @@ from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from fastapi import Body
-from models.users import UserIn, User
+from models.users import UserIn, User, UserUpdate
 from config.database import db
 from config.config import Config
 from schemas.users import userEntity
@@ -31,15 +31,32 @@ def create_user(user: UserIn):
     return JSONResponse({'message': 'User has been created'}, 201)
 
 
-@users.put('/user/')
-def update_user(user: UserIn):
-    _filter = {'email': user.email}
-    update_values = {'$set': user.dict()}
-    is_updated_document = db.user.find_one_and_update(_filter, update_values)
-    if is_updated_document:
-        return JSONResponse({'message': 'Update successful'}, 201)
-    return JSONResponse({'message': 'Could not find a user with this email'}, 400)
+# @users.put('/user/')
+# def update_user(user: UserIn):
+#     _filter = {'email': user.email}
+#     update_values = {'$set': user.dict()}
+#     is_updated_document = db.user.find_one_and_update(_filter, update_values)
+#     if is_updated_document:
+#         return JSONResponse({'message': 'Update successful'}, 201)
+#     return JSONResponse({'message': 'Could not find a user with this email'}, 400)
 
+
+@users.put('/user/update')
+async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
+    user = db.user.find_one({'_id': id})
+    
+    if user is None:
+        return JSONResponse({'message': 'User is not found'}, 400)
+    user_data = {
+        'full_name': user_update.full_name,
+        'email': user_update.email,
+        'phone_number': user_update.phone_number,
+        'accessToken': user_update.accessToken
+    }
+
+    db.user.update_one({'_id': user_id}, {'$set': user})
+
+    return JSONResponse({'username': user_data['username'], 'email': user_data['email'], 'phone_number': user_data['phone_number'], 'accessToken': user_data['decoded_token']}, 200) 
 
 @users.delete('/user/')
 async def delete_user(token: dict = Body(..., example={'token': 'access token value'})):

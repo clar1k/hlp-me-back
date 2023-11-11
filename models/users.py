@@ -21,6 +21,13 @@ class UserOut(BaseModel):
     email: EmailStr
 
 
+class UserUpdate(BaseModel):
+    full_name: str
+    email: EmailStr
+    phone_number: str
+    accessToken: str
+
+
 def check_password(password: str, hashed_password: str) -> bool:
     hashed_input = bcrypt.hashpw(password.encode("utf-8"))
     return hashed_input == hashed_password
