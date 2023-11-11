@@ -1,7 +1,7 @@
-from fastapi import FastAPI
-from routes import auth, users
-from routes import test, local_dangers
 import uvicorn
+from fastapi import FastAPI
+
+from routes import auth, local_dangers, test, users
 
 app = FastAPI(debug=True)
 

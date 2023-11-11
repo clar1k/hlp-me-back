@@ -1,14 +1,13 @@
-from jose import jwt
 import bcrypt
 from bson import ObjectId
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from fastapi.responses import JSONResponse
-from fastapi import Body
-from models.users import UserIn, User
-from config.database import db
-from config.config import Config
-from schemas.users import userEntity
+from jose import jwt
 
+from config.config import Config
+from config.database import db
+from models.users import User, UserIn
+from schemas.users import user_entity
 
 users = APIRouter(tags=['Users'])
 
@@ -17,7 +16,7 @@ users = APIRouter(tags=['Users'])
 def get_user(user_id: str):
     _id = ObjectId(user_id)
     user = db.user.find_one({'id': _id})
-    return userEntity(user)
+    return user_entity(user)
 
 
 @users.post('/user/')
