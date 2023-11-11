@@ -32,7 +32,7 @@ def create_user(user: UserIn):
 
 @users.put('/user/update')
 async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
-    # З UserUpdate декодувати токен, і потім беремо ObjectId, і за ним знаходимо користувача в базі
+    # TODO: З UserUpdate декодувати токен, і потім беремо ObjectId, і за ним знаходимо користувача в базі
     user = db.user.find_one({'_id': id})
 
     if user is None:
