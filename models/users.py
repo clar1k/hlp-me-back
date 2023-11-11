@@ -11,6 +11,7 @@ class User(BaseModel):
 
 
 class UserIn(BaseModel):
+    tg_id: int
     username: str
     email: EmailStr
     password: str

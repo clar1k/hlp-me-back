@@ -14,7 +14,7 @@ auth = APIRouter(tags=['Auth'])
 
 @auth.post('/auth/register')
 async def register(user: UserIn):
-    user_is_existed = db.user.find_one({'user': {'email': user.email}})
+    user_is_existed = db.user.find_one({'email': user.email})
     if user_is_existed:
         return JSONResponse({'message': 'User is already in db'}, 400)
 
