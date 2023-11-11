@@ -31,8 +31,9 @@ def create_user(user: UserIn):
 
 
 @users.put('/user/update')
-async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
+async def update_user(user_id: int, user_update: UserUpdate, accessToken: dict = Body(..., example={'accessToken': 'access token value'}), ) -> JSONResponse:
     # TODO: З UserUpdate декодувати токен, і потім беремо ObjectId, і за ним знаходимо користувача в базі
+
     user = db.user.find_one({'_id': id})
 
     if user is None:
@@ -46,15 +47,16 @@ async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
 
     db.user.update_one({'_id': user_id}, {'$set': user})
 
-    return JSONResponse(
-        {
-            'username': user_data['username'],
+    decoded_access_token = jwt.decode(accessToken['accessToken'], Config.SECRET_KEY, algorithms=['HS256'])
+    _id = ObjectId(decoded_access_token['_id'])
+    if db.user.find_one_and_update({'_id': id, '$set': user_data}):
+        return {
+            'full_name': user_data['username'],
             'email': user_data['email'],
             'phone_number': user_data['phone_number'],
-            'accessToken': user_data['decoded_token'],
-        },
-        200,
-    )
+            'accessToken': user_data['accessToken']
+        }
+    return JSONResponse({'message': 'User does not exist'}, 400)
 
 
 @users.delete('/user/')
