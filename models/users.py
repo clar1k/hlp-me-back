@@ -1,5 +1,5 @@
 from datetime import datetime
-import bcrypt
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -29,5 +29,4 @@ class UserUpdate(BaseModel):
 
 
 def check_password(password: str, hashed_password: str) -> bool:
-    hashed_input = bcrypt.hashpw(password.encode("utf-8"))
-    return hashed_input == hashed_password
+    return password == hashed_password

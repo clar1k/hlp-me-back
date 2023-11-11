@@ -1,14 +1,13 @@
-from jose import jwt
 import bcrypt
 from bson import ObjectId
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from fastapi.responses import JSONResponse
-from fastapi import Body
-from models.users import UserIn, User, UserUpdate
-from config.database import db
-from config.config import Config
-from schemas.users import userEntity
+from jose import jwt
 
+from config.config import Config
+from config.database import db
+from models.users import User, UserIn
+from schemas.users import user_entity
 
 users = APIRouter(tags=['Users'])
 
@@ -17,7 +16,7 @@ users = APIRouter(tags=['Users'])
 def get_user(user_id: str):
     _id = ObjectId(user_id)
     user = db.user.find_one({'id': _id})
-    return userEntity(user)
+    return user_entity(user)
 
 
 @users.post('/user/')
@@ -44,19 +43,28 @@ def create_user(user: UserIn):
 @users.put('/user/update')
 async def update_user(user_id: int, user_update: UserUpdate) -> JSONResponse:
     user = db.user.find_one({'_id': id})
-    
+
     if user is None:
         return JSONResponse({'message': 'User is not found'}, 400)
     user_data = {
         'full_name': user_update.full_name,
         'email': user_update.email,
         'phone_number': user_update.phone_number,
-        'accessToken': user_update.accessToken
+        'accessToken': user_update.accessToken,
     }
 
     db.user.update_one({'_id': user_id}, {'$set': user})
 
-    return JSONResponse({'username': user_data['username'], 'email': user_data['email'], 'phone_number': user_data['phone_number'], 'accessToken': user_data['decoded_token']}, 200) 
+    return JSONResponse(
+        {
+            'username': user_data['username'],
+            'email': user_data['email'],
+            'phone_number': user_data['phone_number'],
+            'accessToken': user_data['decoded_token'],
+        },
+        200,
+    )
+
 
 @users.delete('/user/')
 async def delete_user(token: dict = Body(..., example={'token': 'access token value'})):
