@@ -13,10 +13,10 @@ auth = APIRouter(tags=['Auth'])
 
 @auth.post('/auth/register')
 async def register(user: UserIn):
-    user_is_existed = db.user.find_one({'email': user.email})
+    user_is_existed = db.user.find_one({'user' : {'email': user.email}})
     if user_is_existed:
         return JSONResponse({'message': 'User is already in db'}, 400)
-    db.user.insert_one({'user': user.model_dump()})
+    db.user.insert_one(user.model_dump())
     return JSONResponse({'message': 'User has been added to database!'})
 
 
@@ -25,7 +25,8 @@ async def login(user_input: UserIn) -> JSONResponse:
     return login_user(user_input)
 
 def login_user(user_input: UserIn) -> JSONResponse:
-    user = db.user.find_one({'email': user_input.email})
+    user = db.user.find_one()
+    print(user)
     if user:
         if check_password(user_input.password, user['password']):
             unique_id = str(user['_id'])
