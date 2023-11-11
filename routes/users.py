@@ -32,7 +32,6 @@ def create_user(user: UserIn):
 
 @users.put('/user/update')
 async def update_user(user_id: int, user_update: UserUpdate, accessToken: dict = Body(..., example={'accessToken': 'access token value'}), ) -> JSONResponse:
-    # TODO: З UserUpdate декодувати токен, і потім беремо ObjectId, і за ним знаходимо користувача в базі
 
     user = db.user.find_one({'_id': id})
 
@@ -49,7 +48,7 @@ async def update_user(user_id: int, user_update: UserUpdate, accessToken: dict =
 
     decoded_access_token = jwt.decode(accessToken['accessToken'], Config.SECRET_KEY, algorithms=['HS256'])
     _id = ObjectId(decoded_access_token['_id'])
-    if db.user.find_one_and_update({'_id': id, '$set': user_data}):
+    if db.user.find_one_and_update({'_id': id}, {'$set': user_data}):
         return {
             'full_name': user_data['username'],
             'email': user_data['email'],
