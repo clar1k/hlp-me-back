@@ -97,6 +97,6 @@ async def update_telegram_user_info(user_update: TelegramUserInput):
         return JSONResponse({'msg': 'User not found'}, 404)
 
     db.user.update_one(
-        {'telegram_id': user_update.user_id}, {'$set': user_update.model_dump()}
+        {'user_id': user_update.user_id}, {'$set': user_update.model_dump()}
     )
     return JSONResponse({'msg': 'Update successful'}, 200)
