@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-
 from config.database import db
 from models.location import LocationRequest
 from schemas.dangers import danger_entity
