@@ -1,4 +1,3 @@
-# Створити ендпоїнт для того, щоб створити глобальну небезпеку (оголошення) і потім створити ендоїнт для того, щоб отримати ці небезпеки джсоном (ВСЕ ДЖСОНОМ)
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from config.database import db
