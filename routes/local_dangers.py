@@ -34,3 +34,14 @@ async def get_all_dangers():
         response[index]['user'] = user
 
     return JSONResponse(response, 200)
+
+
+@router.get('/my/{user_id}')
+async def get_my_dangers(user_id: int):
+    user_dangers = db.dangers.find({'user_id': user_id})
+    user_dangers = list(user_dangers)
+    for index in range(len(user_dangers)):
+        user_dangers[index] = await danger_entity(user_dangers[index])
+
+    print(user_dangers)
+    return JSONResponse(user_dangers, 200)
