@@ -1,10 +1,12 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+
 from config.database import db
 from models.link import LinkRequest
 from schemas.global_dangers import global_danger_entity
 
 router = APIRouter(prefix='/global/dangers')
+
 
 @router.post('/create')
 async def create_global_alert(link: LinkRequest):

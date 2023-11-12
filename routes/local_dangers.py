@@ -1,14 +1,17 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+
 from config.database import db
 from models.location import LocationRequest
 from schemas.dangers import danger_entity
+from schemas.users import user_entity
 
 router = APIRouter(prefix='/local/dangers')
 
 
 @router.post('/create')
 async def create_alert(location: LocationRequest):
+    # input datetime
     try:
         db.dangers.insert_one(location.model_dump())
     except Exception as e:
@@ -25,5 +28,9 @@ async def get_all_dangers():
 
     for index in range(len(response)):
         response[index] = await danger_entity(response[index])
-    print(response)
+        print(response[index])
+        user = db.user.find_one({'user_id': response[index]['user_id']})
+        user = user_entity(user)
+        response[index]['user'] = user
+
     return JSONResponse(response, 200)
