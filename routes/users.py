@@ -17,7 +17,7 @@ def get_user(user_id: int):
     user = db.user.find_one({'user_id': user_id})
     if not user:
         return JSONResponse({'message': 'User not found'}, 404)
-    return JSONResponse(user, 200)
+    return JSONResponse(user_entity(user), 200)
 
 
 @users.post('/user/')
