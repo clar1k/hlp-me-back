@@ -30,11 +30,11 @@ class UserUpdate(BaseModel):
 
 class TelegramUserInput(BaseModel):
     user_id: int
-    username: str = ''
+    username: str = ""
     first_name: str
-    full_name: str = ''
-    email: str = ''
-    phone_number: str = ''
+    full_name: str = ""
+    email: str = ""
+    phone_number: str = ""
 
 
 def check_password(password: str, hashed_password: str) -> bool:

@@ -24,6 +24,5 @@ exclude = [
 ]
 
 [tool.ruff.format]
-quote-style = 'single'
+quote-style = "single"
 
-line-ending = 'auto'
