@@ -13,10 +13,11 @@ users = APIRouter(tags=['Users'])
 
 
 @users.get('/user/{user_id}')
-def get_user(user_id: str):
-    _id = ObjectId(user_id)
-    user = db.user.find_one({'id': _id})
-    return user_entity(user)
+def get_user(user_id: int):
+    user = db.user.find_one({'user_id': user_id})
+    if not user:
+        return JSONResponse({'message': 'User not found'}, 404)
+    return JSONResponse(user, 200)
 
 
 @users.post('/user/')
