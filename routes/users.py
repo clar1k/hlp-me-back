@@ -3,6 +3,7 @@ from bson import ObjectId
 from fastapi import APIRouter, Body
 from fastapi.responses import JSONResponse
 from jose import jwt
+
 from config.config import Config
 from config.database import db
 from models.users import User, UserIn, UserUpdate
