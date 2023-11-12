@@ -9,10 +9,9 @@ class Coordinates(BaseModel):
 
 
 class LocationRequest(BaseModel):
-    user_id: int = 0 
+    user_id: int = 0
     name: str
     description: str
     coordinates: Coordinates
     access_token: str = Field(..., alias='accessToken')
-    date_time: datetime
-    time: datetime
+    date_time: datetime = datetime.utcnow()
