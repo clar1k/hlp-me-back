@@ -1,13 +1,9 @@
-from datetime import datetime, timedelta
-
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from jose import jwt
 
-from config.config import Config
 from config.database import db
-from models.users import TelegramUserInput, UserIn
-from schemas.users import user_entity
+from models.users import TelegramUserInput
 
 auth = APIRouter(tags=['Auth'])
 

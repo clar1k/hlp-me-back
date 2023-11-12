@@ -9,7 +9,6 @@ from config.database import db
 from models.users import User, UserIn, UserUpdate
 from schemas.users import user_entity
 
-
 users = APIRouter(tags=['Users'])
 
 
