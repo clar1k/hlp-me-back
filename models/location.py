@@ -9,6 +9,7 @@ class Coordinates(BaseModel):
 
 
 class LocationRequest(BaseModel):
+    user_id: int
     name: str
     description: str
     coordinates: Coordinates
