@@ -7,5 +7,5 @@ class LinkRequest(BaseModel):
     name: str
     descriptrion: str
     link: str
-    access_token: str = Field(..., alias="accessToken")
+    access_token: str = Field(..., alias='accessToken')
     time: datetime

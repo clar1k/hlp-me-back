@@ -13,5 +13,5 @@ class LocationRequest(BaseModel):
     name: str
     description: str
     coordinates: Coordinates
-    access_token: str = Field(..., alias="accessToken")
+    access_token: str = Field(..., alias='accessToken')
     date_time: datetime = datetime.utcnow()
