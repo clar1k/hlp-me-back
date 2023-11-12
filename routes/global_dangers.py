@@ -22,7 +22,7 @@ async def get_all_global_dangers():
     global_danger = db.global_dangers.find()
     response = list(global_danger)
 
-    for i in range(len(response)):
-        response[i] = await global_danger_entity(response[i])
-    print(response)
+    for index in range(len(response)):
+        response[index] = await global_danger_entity(response[index])
+
     return JSONResponse(response, 200)

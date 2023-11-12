@@ -8,4 +8,4 @@ class LinkRequest(BaseModel):
     descriptrion: str
     link: str
     access_token: str = Field(..., alias='accessToken')
-    time: datetime
+    time: datetime = datetime.utcnow()

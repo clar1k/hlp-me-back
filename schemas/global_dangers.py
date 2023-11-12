@@ -1,6 +1,6 @@
-async def global_danger_entity(danger: dict) -> dict:
+async def global_danger_entity(global_danger: dict) -> dict:
     return {
-        'name': danger['name'],
-        'description': danger['description'],
-        'link': danger['link'],
+        'name': global_danger['name'],
+        'description': global_danger['description'],
+        'link': global_danger['link'],
     }
