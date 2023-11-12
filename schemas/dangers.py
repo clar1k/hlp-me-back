@@ -3,5 +3,5 @@ async def danger_entity(danger: dict) -> dict:
         'name': danger['name'],
         'description': danger['description'],
         'coordinates': danger['coordinates'],
-        'date_time': danger['date_time'],
+        'date_time': str(danger['date_time']),
     }
