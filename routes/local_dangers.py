@@ -10,6 +10,7 @@ router = APIRouter(prefix='/local/dangers')
 
 @router.post('/create')
 async def create_alert(location: LocationRequest):
+    # input datetime
     try:
         db.dangers.insert_one(location.model_dump())
     except Exception as e:

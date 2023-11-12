@@ -1,7 +1,8 @@
-from fastapi.responses import RedirectResponse
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
+
 from routes import auth, local_dangers, test, users
 
 app = FastAPI(debug=True)
