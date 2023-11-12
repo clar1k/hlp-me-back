@@ -61,7 +61,7 @@ async def logout(token: str) -> JSONResponse:
 
 @auth.post('/tg/register')
 async def register_telegram_user(user: TelegramUserInput):
-    if db.user.find_one({'telegram_id': user.user_id}):
+    if db.user.find_one({'user_id': user.user_id}):
         return JSONResponse({'msg': 'User already registered'}, 400)
 
     try:
@@ -75,7 +75,7 @@ async def register_telegram_user(user: TelegramUserInput):
 
 @auth.post('/tg/login')
 async def login_telegram_user(user: TelegramUserInput):
-    user = db.user.find_one({'telegram_id': user.user_id})
+    user = db.user.find_one({'user_id': user.user_id})
     if not user:
         return JSONResponse({'msg': 'User not found'}, 404)
 
@@ -92,7 +92,7 @@ async def login_telegram_user(user: TelegramUserInput):
 
 @auth.put('/tg/update')
 async def update_telegram_user_info(user_update: TelegramUserInput):
-    user = db.user.find_one({'telegram_id': user_update.user_id})
+    user = db.user.find_one({'user_id': user_update.user_id})
     if not user:
         return JSONResponse({'msg': 'User not found'}, 404)
 

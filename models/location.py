@@ -12,4 +12,5 @@ class LocationRequest(BaseModel):
     description: str
     coordinates: Coordinates
     access_token: str = Field(..., alias='accessToken')
+    date_time: datetime
     time: datetime
